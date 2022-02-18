@@ -1,0 +1,15 @@
+*{
+  margin: auto;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+body{
+  background-color: tomato;
+}
+
+.container{
+  width: 600px;
+  /* height : 200px; */
+}
