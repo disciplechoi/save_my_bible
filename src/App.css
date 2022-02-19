@@ -13,3 +13,14 @@ body{
   width: 600px;
   /* height : 200px; */
 }
+
+.container__bible{
+  float: left;
+}
+
+.verse{
+  cursor: pointer;
+}
+.verse :hover{
+ background-color: blue;
+}
