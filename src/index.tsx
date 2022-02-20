@@ -8,7 +8,7 @@ import Keep from './Keep';
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Keep book={''} chapter={''} verse={''} />
+    {/* <Keep book={''} chapter={''} verse={''} /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
