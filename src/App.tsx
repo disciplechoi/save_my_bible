@@ -3,67 +3,102 @@ import './App.css';
 import Keep from './Keep';
 
 function App() {
-  const [bible, setBible] = React.useState("");
-  const [book, setBook] = React.useState("");
-  const [bookList, setBookList] = React.useState([]);
-  const [chapter, setChapter] = React.useState("");
+  const [bibleVerse, setBibleVerse] = React.useState("");
+  const [bibleBookList, setBibleBookList] = React.useState([]);
+  const [bookId, setBookId] = React.useState('GEN');
+  const [bookName, setBookName] = React.useState('Genesis');
+  
+  const [chapter, setChapter] = React.useState('');
+  const [chapterList, setChapterList] = React.useState([]);
   const [verse, setVerse] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
 
-  async function getBible(chapter :string = 'Genesis'){
+  async function getBibleVerse(book = 'Genesis', chapter ='1'){
 
-    const response = await fetch(`https://api.esv.org/v3/passage/text/?q=${chapter}&include-passage-references=false&include-verse-numbers=true&include-headings=false&include-passage-horizontal-lines=true&include-first-verse-numbers=true&include-footnotes=false&include-heading-horizontal-lines=true`,
+    const response = await fetch(`https://api.esv.org/v3/passage/text/?q=${book}+${chapter}&include-passage-references=false&include-verse-numbers=true&include-headings=false&include-passage-horizontal-lines=true&include-first-verse-numbers=true&include-footnotes=false&include-heading-horizontal-lines=true`,
       {method: 'GET', headers:{'Authorization': 'Token d59a5361e2ab87063ed857904f5f6ce3d1869392'}}
     );
 
     const json = await response.json();
-    setBible(json.passages);
-    //console.log(json);
-
+    setBibleVerse(json.passages);
+    //console.log(response);
   }
 
-  async function getBook(){
-    const response = await fetch(`https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/books`,
+  async function getBibleBookList(){
+    const response = await fetch(`https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-02/books`,
     {method: 'GET', headers:{'api-key': 'a4a596acd24972af4dca8f517c565555'}}
   );
 
   const json = await response.json();
-  setBookList(json.data);
+  setBibleBookList(json.data);
+  //console.log(json.data);
   setLoading(true);
-  
-  
-
   }
 
-  const onChangeGetBookList = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    getBook();
-    const name = event.target.value;
-    setBook(name);
-    getBible(name);
-    console.log(name);
+  async function getBibleChapter(book: string = 'GEN'){
+    const response = await fetch(`https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/books/${book}/chapters`,
+    {method: 'GET', headers:{'api-key': 'a4a596acd24972af4dca8f517c565555'}}
+  );
+
+  const json = await response.json();
+  setChapterList(json.data);
+  //console.log(json.data);
+  // setLoading(true);
+  }
+
+  const onChangeBibleBookList = (event: React.ChangeEvent<HTMLSelectElement>) => {
+
+    let bookID = event.target.value;
+    let bookName = event.target.options[event.target.selectedIndex].text;
+    
+
+    setBookId(bookID);
+    console.log(bookName);
+    setBookName(bookName);
+    getBibleChapter(bookID);
+    getBibleBookList();
+    console.log("1번 셀렉트 book : " + bookID+ ": " + chapter + "   bookName : " +bookName);
+    getBibleVerse(bookName, chapter);   
+    //console.log("onChangeGetBookList");
+  }
+
+  const onChangeBibleChapterList = (event: React.ChangeEvent<HTMLSelectElement>)  => {
+
+    
+    const chapter = event.target.value;
+    setChapter(chapter); 
+    
+    //console.log("book : " + bookName+ ": " + chapter);
+    getBibleChapter(bookId);
+    getBibleVerse(bookName, chapter);
     
   }
 
-  useEffect(()=>{getBook(); getBible();},[]);
+  useEffect(()=>{ getBibleBookList();getBibleChapter();getBibleVerse(); },[]);
   
   return (
     <div className="container container__bible">
       <h1 className="box-decoration-slice">My Bible</h1>
   
-      <select onChange={onChangeGetBookList} >
-        { loading? bookList.map(({name}: any)=><option>{name}</option>) : "loading"}
+      <select onChange={onChangeBibleBookList} value={bookId}>
+        { bibleBookList&&bibleBookList.map(({name, id}: any)=><option value={id}>{name}</option>)}
+      </select>
+      
+      <br/>
+      <select onChange={onChangeBibleChapterList} value={chapter}>
+        { chapterList&&chapterList.map(({number}: any)=><option>{number}</option>)}
       </select>
 
       <div className="container mx-auto">
-        {bible? bible.toString().split('[').map((content,index) => 
+        {bibleVerse? bibleVerse.toString().split('[').map((content,index) => 
         <div className="hover:bg-white">
         <span key={index}>{index}</span>
-        <p key={index} className="verse">{content} </p>
+        <p key={content} className="verse">{content} </p>
         </div>) : "Loading"}
       </div>
       
-      <Keep book={book} chapter={chapter} verse={verse}/>
+      <Keep book={bookName} chapter={chapter} verse={verse}/>
     </div>
   );
 }
