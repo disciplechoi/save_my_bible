@@ -1,6 +1,9 @@
 import React, { SelectHTMLAttributes, useEffect, useState } from 'react';
 import './App.css';
 import Keep from './Keep';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookBible, faBookmark } from '@fortawesome/free-solid-svg-icons';
+
 
 function App() {
   const [bibleVerse, setBibleVerse] = React.useState("");
@@ -94,28 +97,32 @@ function App() {
     <div >
       {/* <h1 className="box-decoration-slice">My Bible</h1> */}
 
-      <div className="mx-auto" id="container">
+      <div className="mx-auto shadow-lg shadow-blue-500/40" id="container">
           
           <input id="tab-1" type="radio" name="tab-group" checked />
-            <label className="lal__content1" htmlFor="tab-1" >Description</label>
+            <label className="lal__content1" htmlFor="tab-1" >
+            <FontAwesomeIcon icon={faBookBible} /></label>
 
             <input  id="tab-2" type="radio" name="tab-group" />
-	          <label htmlFor="tab-2" className="lal__content2">Tab 2</label>
+	          <label htmlFor="tab-2" className="lal__content2"><FontAwesomeIcon className="icon__bible" icon={faBookmark} /></label>
             
              <div id="content">
-                  <div id="content-1" className="border-solid border-2 border-white-600">                 
-                    <select onChange={onChangeBibleBookList} value={bookId}>
-                      { bibleBookList&&bibleBookList.map(({name, id}: any)=><option value={id}>{name}</option>)}
-                    </select>
+                  <div id="content-1" className="border-solid border-2 border-white-600 shadow-2xl shadow-grey-500/50"> 
                     
-                    <br/>
-                    <select onChange={onChangeBibleChapterList} value={chapter}>
-                      { chapterList&&chapterList.map(({number}: any)=><option>{number}</option>)}
-                    </select>
+                      <select onChange={onChangeBibleBookList} className="appearance-none" value={bookId}>
+                        { bibleBookList&&bibleBookList.map(({name, id}: any)=><option value={id}>{name}</option>)}
+                      </select>
+                      
+                      <br/>
+                      <select onChange={onChangeBibleChapterList} className="appearance-none" value={chapter}>
+                        { chapterList&&chapterList.map(({number}: any)=><option>{number}</option>)}
+                      </select>
+                                  
+                    
 
                     <div className="content-1__bibleVerse">
                       {bibleVerse? bibleVerse.toString().split('[').map((content,index) => 
-                        <p key={chapter+index} className="verse" onClick={saveBibleVerse}>{content} </p>) : "Loading"}
+                        <p key={chapter+index} className="verse" onClick={saveBibleVerse}>{content.split(']')} </p>) : "Loading"}
                     </div>
                  
                 </div>
