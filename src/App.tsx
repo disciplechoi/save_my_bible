@@ -19,7 +19,7 @@ function App() {
   //when click what you wante dto save
   const [savedVerse, setSavedVerse] = useState("");
   const [savedVerseList, setSavedVerseList] = useState<string[]>([]);
-
+  //const [savedVerseList, setSavedVerseList] = useState([]);
 
   async function getBibleVerse(book = 'Genesis', chapter ='1'){
 
@@ -85,9 +85,9 @@ function App() {
   const saveBibleVerse =(event: React.MouseEvent<HTMLElement>) :void=>{
     let savedBibleVerse = event.target as HTMLElement;
     let savedBibleVerseInnerText =  savedBibleVerse.innerText
-    console.log(savedBibleVerse.innerText);
+    
     setSavedVerse(savedBibleVerseInnerText);
-    setSavedVerseList((currentArray) =>[savedVerse,...currentArray]);
+    setSavedVerseList((currentArray) =>[savedBibleVerseInnerText,...currentArray]);
 
   }
 
@@ -95,6 +95,11 @@ function App() {
   
   return (
     <div >
+      <div className="title__background">
+      <h1 className="title__background--GOD">GOD</h1>
+      <h1 className="title__background--ISGOOD">IS GOOD</h1>
+      </div>
+    
       {/* <h1 className="box-decoration-slice">My Bible</h1> */}
 
       <div className="mx-auto shadow-lg shadow-blue-500/40" id="container">
@@ -108,13 +113,11 @@ function App() {
             
              <div id="content">
                   <div id="content-1" className="border-solid border-2 border-white-600 shadow-2xl shadow-grey-500/50"> 
-                    
-                      <select onChange={onChangeBibleBookList} className="appearance-none" value={bookId}>
+                     
+                      <select onChange={onChangeBibleBookList} className="" value={bookId}>
                         { bibleBookList&&bibleBookList.map(({name, id}: any)=><option value={id}>{name}</option>)}
                       </select>
-                      
-                      <br/>
-                      <select onChange={onChangeBibleChapterList} className="appearance-none" value={chapter}>
+                      <select onChange={onChangeBibleChapterList} className="" value={chapter}>
                         { chapterList&&chapterList.map(({number}: any)=><option>{number}</option>)}
                       </select>
                                   
@@ -128,7 +131,7 @@ function App() {
                 </div>
 
                 <div id="content-2" className="border-solid border-2 border-white-600 scroll-smooth">
-                   <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+                   {savedVerseList&&savedVerseList.map(index=><p>{index}</p>)}
                 </div>      
              </div>
           
