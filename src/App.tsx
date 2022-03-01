@@ -94,7 +94,7 @@ function App() {
   useEffect(()=>{ getBibleBookList();getBibleChapter();getBibleVerse(); },[]);
   
   return (
-    <div >
+    <div className="container__app" >
       <div className="title__background">
       <h1 className="title__background--GOD">GOD</h1>
       <h1 className="title__background--ISGOOD">IS GOOD</h1>

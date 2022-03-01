@@ -1,31 +1,18 @@
-body{
-  background-image: url('../public/bg.jpeg');
-  
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-size: 100% 100%;
-  
-  background-position: center top; 
-  /* background: linear-gradient(120grad, rgb(100, 57, 134), rgb(152, 174, 213));
-  position: absolute;
-  width: 100%;
-  height: 100%; */
-
+.container__app{
+  width: 70vw;
+  margin: auto;
+  max-width: 550px;
 }
 
 p{ color: #3B3B3B;}
 
-.verse{
-  
-}
-
 @keyframes verse-ani{
   0%{
     transform: translate(0,0);
-}
-100%{
+  }
+  100%{
     transform: translate(-3px, -3px);
-}
+  }
 }
 .verse:hover{
   background-color: white;
@@ -61,12 +48,6 @@ p{ color: #3B3B3B;}
   cursor: pointer;
 }
 
-/* #content:first-child{
-  float:left;
-}
-#content:second-child{
-  float:right;
-} */
 
 select{
   width : 50%;
@@ -79,7 +60,7 @@ select{
 
 #container {
   margin: 0 auto;
-  width: 40%;  /* Ancho del contenedor */
+  /* width: 40%;  Ancho del contenedor */
   margin-top: 90px;
 }
 
@@ -90,7 +71,7 @@ visibility: hidden;
 }
 
 #container label {
-  background: #f9f9f9;  
+  background: #9d9bb1;  
   display: flex;
 
   color: #888;
@@ -113,6 +94,12 @@ visibility: hidden;
 
 }
 
+label{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lal__content1{
   border-radius: .6em 0 0 0;
 }
@@ -128,12 +115,12 @@ visibility: hidden;
 }
 
 #container input:hover + label {
-background: #ddd;  /* Fondo de las pestañas al pasar el cursor por encima */
-color: #666;  /* Color del texto de las pestañas al pasar el cursor por encima */
+background: #5C7E73;  /* Fondo de las pestañas al pasar el cursor por encima */
+
 }
 
 #container input:checked + label {
-background: #5F5C6D;  
+background: #474554;  
 color: #444;
 position: relative;
 z-index: 6;
@@ -172,6 +159,7 @@ transition: all linear 0.1s;
 
 #content-1, #content-2{
   height: 600px;
+  width: 100%;
   background-color: #E3E0F3;
   border-bottom-left-radius: 0.6em;
   border-bottom-right-radius: 0.6em;
